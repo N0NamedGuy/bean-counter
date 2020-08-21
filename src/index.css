@@ -1,13 +1,91 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 18px;
+    box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.unstyled {
+    list-style: none;
 }
+
+.jumbotron {
+    margin: 20px auto;
+    display: block;
+    width: 70%;
+    background: #ff7777;
+    padding: 30px;
+    text-align: center;
+}
+
+.form-error {
+    color: #ff2222;
+}
+
+.inline-form-group {
+    display: flex;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+table {
+    width: 100%;
+}
+
+table th {
+    background-color: #772277;
+    color: #fff;
+}
+
+input[type=date], input[type=text], input[type=number] {
+    font-size: inherit;
+    font-family: inherit;
+}
+
+button {
+    border: solid;
+    padding: 5px;
+    background-color: #77ff77;
+    font-size: inherit;
+    cursor: pointer;
+}
+
+.remove-btn {
+    background-color: #ff7777;
+}
+
+.total-qtd {
+    font-size: 2em;
+}
+
+.form-group+.form-group {
+    margin-top: 1.2em;
+}
+
+.form-actions {
+    padding-top: 1.2em;
+}
+
+.back-link,
+.product-link {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: #111;
+    background: #aaffaa;
+}
+
+.back-link {
+    padding: 10px 0;
+}
+  
+.brand {
+    font-size: 1.3em;
+    margin: 0;
+    background: #772277;
+    color: #fff;
+  }
