@@ -14,7 +14,7 @@ function App() {
 
     return (
         <div className="bean-counter">
-            <Router>
+            <Router basename="/beans">
                 <h1 className="brand">Conta-feijões</h1>
 
                 <Switch>
