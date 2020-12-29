@@ -88,4 +88,21 @@ button {
     margin: 0;
     background: #772277;
     color: #fff;
-  }
+}
+
+.export-code {
+    font-family: 'Courier New', Courier, monospace;
+    width: 100%;
+    min-height: 46vh;
+}
+
+.nav-link {
+    display: inline-block;
+    padding: 4px;
+    background-color: #aaffaa;
+    text-align: center;
+}
+
+.nav-link  + .nav-link  {
+    margin-left: 1ch;
+}

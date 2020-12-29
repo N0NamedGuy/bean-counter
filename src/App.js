@@ -3,12 +3,15 @@ import './App.css';
 
 import { Products } from './pages/Products';
 import { ProductDetails } from './pages/ProductDetails';
+import { Export } from './pages/Export';
 
 import {
     BrowserRouter as Router,
     Switch,
-    Route
+    Route,
+    Link
 } from 'react-router-dom';
+import { Import } from './pages/Import';
 
 function App() {
 
@@ -17,12 +20,24 @@ function App() {
             <Router basename="/beans">
                 <h1 className="brand">Conta-feijões</h1>
 
+                <nav>
+                    <Link className="nav-link" to="/">Início</Link>
+                    <Link className="nav-link" to="/import">Importar</Link>
+                    <Link className="nav-link" to="/export">Exportar</Link>
+                </nav>
+
                 <Switch>
                     <Route exact path="/">
                         <Products />
                     </Route>
                     <Route path="/details/:id">
                         <ProductDetails />
+                    </Route>
+                    <Route path="/export">
+                        <Export />
+                    </Route>
+                    <Route path="/import">
+                        <Import />
                     </Route>
                 </Switch>
                 <footer>
