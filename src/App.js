@@ -7,7 +7,7 @@ import { Export } from './pages/Export';
 
 import {
     BrowserRouter as Router,
-    Switch,
+    Routes,
     Route,
     Link
 } from 'react-router-dom';
@@ -26,22 +26,14 @@ function App() {
                     <Link className="nav-link" to="/export">Exportar</Link>
                 </nav>
 
-                <Switch>
-                    <Route exact path="/">
-                        <Products />
-                    </Route>
-                    <Route path="/details/:id">
-                        <ProductDetails />
-                    </Route>
-                    <Route path="/export">
-                        <Export />
-                    </Route>
-                    <Route path="/import">
-                        <Import />
-                    </Route>
-                </Switch>
+                <Routes>
+                    <Route path="/" element={<Products/>} />
+                    <Route path="/details/:id" element={<ProductDetails/>} />
+                    <Route path="/export" element={<Export/>} />
+                    <Route path="/import" element={<Import/>} />
+                </Routes>
                 <footer>
-                    <small>&copy; 2020 David Serrano</small>
+                    <small>&copy; 2022 David Serrano</small>
                 </footer>
             </Router>
         </div>
