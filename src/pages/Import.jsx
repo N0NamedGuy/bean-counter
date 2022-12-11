@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useStorageState } from "../hooks/useStorageState";
 
 export const Import = () => {
+    // eslint-disable-next-line
     const [products, setProducts] = useStorageState('products', []);
     const [importedData, setImportedData] = useState('');
     const userDataEl = useRef(null);
