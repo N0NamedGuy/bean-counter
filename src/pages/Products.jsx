@@ -1,91 +1,60 @@
-import React from 'react';
-import { useStorageState } from '../hooks/useStorageState';
-import { Formik } from 'formik';
+import React, { useState } from 'react';
 import { ProductsList } from '../components/ProductsList';
 
-import { getNewId } from '../utils';
+import {
+    IonButton, IonButtons,
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+    useIonViewWillEnter
+} from '@ionic/react';
+import { ProductAddForm } from '../components/ProductAddForm';
+import { createProduct as createProduct, listProducts as listProducts } from '../model/product';
 
 const Products = () => {
-    const [products, setProducts] = useStorageState('products', []);
+    const [products, setProducts] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-    function validateForm(values) {
-        const errors = {};
-        if (!values.productName || values.productName.trim() === '') {
-            errors.productName = 'Insira um nome para o produto';
-        }
-        return errors;
-    }
+    useIonViewWillEnter(() => {
+        setIsLoading(true);
+        listProducts().then((products) => {
+            setProducts(products);
+        })
+        .finally(() => {
+            setIsLoading(false);
+        });
+    }, [])
 
-    function onSubmit(values, { setSubmitting, resetForm }) {
-        const newId = getNewId(products, e => e.id);
-
-        const newProduct = {
-            name: values.productName,
-            id: newId,
-            quantity: 0,
-            records: []
-        }
-
-        setProducts(val => [newProduct, ...val]);
-
-        setSubmitting(false);
-
-        resetForm();
+    function handleAddProduct(newProduct) {
+        createProduct(newProduct);
     }
 
     function removeProduct(product) {
-        setProducts(products => products.filter((p, i) =>
-            p.id !== product.id
-        ));
+        removeProduct(product.id);
     }
 
-    return <div className="page-products">
-        <h2>Produtos</h2>
-
-        <Formik
-            initialValues={{ productName: '' }}
-            validate={validateForm}
-            onSubmit={onSubmit}>
-
-            {({
-                values,
-                errors,
-                touched,
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                isSubmitting
-            }) =>
-                <form onSubmit={handleSubmit}>
-
-                    <div className="form-group">
-                        <input type="text"
-                            placeholder="Nome do produto"
-                            name="productName"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.productName}
-                            className="flex-grow"
-                        />
-
-                        <div className="form-error">
-                            {errors.productName && touched.productName && errors.productName}
-                        </div>
-                    </div>
-                    <div className="form-actions">
-                        <button type="submit" className="form-group-btn" disabled={isSubmitting}>
-                            Adicionar
-                        </button>
-                    </div>
-                </form>
+    return <IonPage>
+        <IonHeader translucent={true}>
+            <IonToolbar>
+                <IonTitle>Conta-feijões</IonTitle>
+                <IonButtons slot="primary">
+                    <IonButton routerLink='/settings'>
+                        Definições
+                    </IonButton>
+                </IonButtons>
+            </IonToolbar>
+        </IonHeader>
+        <IonContent fullscreen>
+            {
+                isLoading ? <div>A carregar dados</div>: <>
+                    <ProductAddForm products={products} onSave={handleAddProduct} />
+                    <ProductsList products={products} onRemove={removeProduct} />
+                </>
             }
-        </Formik>
-
-        <br />
-
-        <ProductsList products={products} onRemove={removeProduct} />
-
-    </div>
+        </IonContent>
+    </IonPage>
 };
 
 export { Products };

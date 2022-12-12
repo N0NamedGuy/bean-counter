@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { useStorageState } from "../hooks/useStorageState";
 
+import { IonPage, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent } from '@ionic/react';
+
 export const Import = () => {
     // eslint-disable-next-line
     const [products, setProducts] = useStorageState('products', []);
@@ -15,7 +17,7 @@ export const Import = () => {
             window.alert('Copiaste isso mal!')
             return;
         }
-        
+
         if (window.confirm('Estás prestes a substituir os dados que tens. Tens a certeza que queres continuar?')) {
             try {
                 const data = JSON.parse(importedString);
@@ -37,7 +39,7 @@ export const Import = () => {
                                 typeof record.quantity !== 'undefined' &&
                                 typeof record.id !== 'undefined'
                         })
-                    }
+                }
                 );
 
                 if (!valid) {
@@ -58,16 +60,25 @@ export const Import = () => {
 
     const onImportDataChange = (event) => {
         setImportedData(event.target.value);
-
     };
 
-    return <div>
-        <span>Cole aqui os dados do seu outro dispositivo</span>
-        <br/>
-        <button onClick={() => doImport()}>Importar</button>
-        <div>
-            <textarea ref={userDataEl} className="export-code" value={importedData}
-            onChange={onImportDataChange}></textarea>
-        </div>
-    </div>
+    return <IonPage>
+        <IonHeader translucent={true}>
+            <IonToolbar>
+                <IonButtons slot="start">
+                    <IonBackButton defaultHref="/" />
+                </IonButtons>
+                <IonTitle>Importar dados</IonTitle>
+            </IonToolbar>
+        </IonHeader>
+        <IonContent fullscreen>
+            <span>Cole aqui os dados do seu outro dispositivo</span>
+            <br />
+            <button onClick={() => doImport()}>Importar</button>
+            <div>
+                <textarea ref={userDataEl} className="export-code" value={importedData}
+                    onChange={onImportDataChange}></textarea>
+            </div>
+        </IonContent>
+    </IonPage>
 }

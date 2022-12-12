@@ -1,68 +1,57 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Link } from 'react-router-dom';
+import {
+    IonItem,
+    IonItemOption,
+    IonItemOptions,
+    IonItemSliding,
+    IonLabel,
+    IonList
+} from '@ionic/react';
 
 const ProductsList = ({ products, onRemove }) => {
     const [totals, setTotals] = useState({});
 
     useEffect(() => {
-        const newTotals = products.map(p => {
+        const newTotals = (products || []).map(p => {
             return {
                 id: p.id,
                 total: p.records.reduce((acc, cur) => acc + cur.quantity, 0)
             }
         })
-        .reduce((acc, cur) => {
-            acc[cur.id] = cur.total;
-            return acc;
-        }, {});
+            .reduce((acc, cur) => {
+                acc[cur.id] = cur.total;
+                return acc;
+            }, {});
 
         setTotals(newTotals);
-
     }, [products]);
 
-    return <div className="products-list">
-        {
-            products && products.length > 0 ?
+    return products && products.length > 0 ?
+        <IonList>
+            {products.map((product) => {
+                return <IonItemSliding key={product.id}>
+                    <IonItem button routerLink={`/details/${product.id}`}>
+                        <IonLabel>{product.name} [{product.id}]</IonLabel>
+                        <IonLabel slot="end">
+                            {totals[product.id]}&nbsp;g
+                        </IonLabel>
+                    </IonItem>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Peso</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            products.map((product, i) =>
-                                <tr key={i}>
-
-                                    <td className="product-cell">
-                                        <Link className="product-link" to={`/details/${product.id}`}>
-                                            {product.name}
-                                        </Link>
-                                    </td>
-
-                                    <td>
-                                        {totals[product.id]}&nbsp;g
-                                    </td>
-
-                                    <td>
-
-                                        <button className="remove-btn" onClick={e => onRemove(product)}>
-                                            &times;
-                                </button>
-                                    </td>
-                                </tr>)
-                        }
-                    </tbody>
-                </table>
-
-                :
-
-                <div className="jumbotron"> Ainda não adicionou nenhum produto </div>
-        }
-    </div>
+                    <IonItemOptions slide="end"
+                        onIonSwipe={e => onRemove(product)}>
+                        <IonItemOption color="danger" expandable
+                            onClick={e => onRemove(product)}>
+                            Apagar
+                        </IonItemOption>
+                    </IonItemOptions>
+                </IonItemSliding>
+            })}
+        </IonList>
+        :
+        <div className="ion-padding">
+            <h2>Ainda não adicionou nenhum produto</h2>
+        </div>
 }
 
 export { ProductsList };

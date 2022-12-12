@@ -1,5 +1,6 @@
 {
     "conventionalCommits.scopes": [
-        "eslint"
+        "eslint",
+        "ionic"
     ]
 }
