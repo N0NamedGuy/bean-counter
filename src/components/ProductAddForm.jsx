@@ -110,8 +110,7 @@ function getRandProduct() {
                     }
                 </IonNote>
                 <IonButton slot="end"
-                    type="submit"
-                    size='large'>
+                    type="submit">
                     Adicionar
                 </IonButton>
             </IonItem>
