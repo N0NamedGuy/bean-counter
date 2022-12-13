@@ -4,18 +4,13 @@ import { useParams } from 'react-router-dom';
 import { ProductRecordList } from '../components/ProductRecordList';
 
 import {
-    IonBackButton,
-    IonButtons, IonContent, IonHeader,
-    IonPage,
+    IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonList, IonPage,
     IonTitle,
-    IonToolbar,
-    IonFooter,
-    useIonViewWillEnter,
-    IonList,
-    IonItem
+    IonToolbar, useIonModal, useIonViewWillEnter
 } from '@ionic/react';
+import { ProductEditModal } from '../components/ProductEditModal';
 import { ProductRecordAddForm } from '../components/ProductRecordAddForm';
-import { findProduct } from '../model/product';
+import { findProduct, updateProduct } from '../model/product';
 import { createProductRecord, removeProductRecord } from '../model/product-record';
 
 const ProductDetails = () => {
@@ -27,6 +22,10 @@ const ProductDetails = () => {
 
     const [quantity, setQuantity] = useState(null);
 
+    const [present, dismiss] = useIonModal(ProductEditModal, {
+        onDismiss: (data, role) => { dismiss(data, role) },
+        product
+    });
 
     useIonViewWillEnter((e) => {
         setIsLoading(true);
@@ -75,12 +74,34 @@ const ProductDetails = () => {
             });
     }
 
+    function handleUpdateProduct(product) {
+        updateProduct(product)
+            .then((product) => {
+                setProduct(product);
+            });
+    }
+
+    function openEditModal() {
+        present({
+            onWillDismiss: (ev) => {
+                if (ev.detail.role === 'save') {
+                    handleUpdateProduct(ev.detail.data);
+                }
+            },
+            canDismiss: true,
+            showBackdrop: true
+        });
+    }
+
     return <IonPage>
         <IonHeader translucent>
             <IonToolbar>
                 <IonTitle>{product && product.name}</IonTitle>
                 <IonButtons slot="start">
                     <IonBackButton defaultHref="/" />
+                </IonButtons>
+                <IonButtons slot="end">
+                    <IonButton onClick={() => openEditModal()}>Editar</IonButton>
                 </IonButtons>
             </IonToolbar>
         </IonHeader>
@@ -108,9 +129,6 @@ const ProductDetails = () => {
                     }
                 </>}
         </IonContent>
-
-        <IonFooter>
-        </IonFooter>
     </IonPage>
 };
 
