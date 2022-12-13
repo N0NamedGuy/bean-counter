@@ -2,7 +2,7 @@ import { useFormik } from 'formik'
 import { IonList, IonItem, IonLabel, IonInput, IonNote, IonButton } from '@ionic/react';
 import { getNewId } from '../utils';
 
-export const ProductAddForm = (products, {onSave}) => {
+export const ProductAddForm = ({products, onSave}) => {
     const formik = useFormik({
         initialValues: {
             productName: ''
@@ -48,7 +48,6 @@ export const ProductAddForm = (products, {onSave}) => {
                     onIonChange={formik.handleChange}
                     onIonBlur={formik.handleBlur}
                     value={formik.values.productName}
-                    placeholder="Nome do produto"
                 />
                 <IonNote slot="error">
                     {
