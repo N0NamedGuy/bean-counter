@@ -9,6 +9,7 @@ import {
     IonPage,
     IonTitle,
     IonToolbar,
+    IonFooter,
     useIonViewWillEnter
 } from '@ionic/react';
 import { ProductRecordAddForm } from '../components/ProductRecordAddForm';
@@ -87,16 +88,17 @@ const ProductDetails = () => {
         </IonHeader>
 
         <IonContent>
-            <ProductRecordAddForm product={product} onSave={addRecord} />
-
             {productError ? <h2>
                 Este produto já não existe (ou nunca existiu!)
-                <pre>{JSON.stringify(productError, null, 2)}</pre>
             </h2> :
                 product && <ProductRecordList records={product.records}
                     onRemove={removeRecord} />
             }
         </IonContent>
+
+        <IonFooter>
+            <ProductRecordAddForm product={product} onSave={addRecord} />
+        </IonFooter>
     </IonPage>
 };
 

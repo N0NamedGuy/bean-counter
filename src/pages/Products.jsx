@@ -8,10 +8,11 @@ import {
     IonPage,
     IonTitle,
     IonToolbar,
+    IonFooter,
     useIonViewWillEnter
 } from '@ionic/react';
 import { ProductAddForm } from '../components/ProductAddForm';
-import { createProduct as createProduct, listProducts as listProducts } from '../model/product';
+import { createProduct, listProducts, removeProduct } from '../model/product';
 
 const Products = () => {
     const [products, setProducts] = useState(null);
@@ -63,12 +64,15 @@ const Products = () => {
         </IonHeader>
         <IonContent fullscreen>
             {
-                isLoading ? <div>A carregar dados</div>: <>
-                    <ProductAddForm products={products} onSave={handleAddProduct} />
-                    <ProductsList products={products} onRemove={removeProduct} />
+                isLoading ? <div>A carregar dados</div> : <>
+                    <ProductsList products={products} onRemove={handleRemoveProduct} />
                 </>
             }
         </IonContent>
+        <IonFooter>{
+                isLoading ? <></> : 
+                    <ProductAddForm products={products} onSave={handleAddProduct} />
+        }</IonFooter>
     </IonPage>
 };
 
