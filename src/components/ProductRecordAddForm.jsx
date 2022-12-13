@@ -48,7 +48,7 @@ export const ProductRecordAddForm = ({ product, onSave }) => {
         return errors;
     }
 
-    function onSubmit(values, { setSubmitting, resetForm }) {
+    function onSubmit(values, { setSubmitting, setValues }) {
         const { quantity, recordDate } = values;
 
         const newRecord = {
@@ -57,13 +57,17 @@ export const ProductRecordAddForm = ({ product, onSave }) => {
             id: getNewId(product.records, e => e.id)
         };
 
-        resetForm();
         setSubmitting(false);
+
+        setValues({
+            quantity: null,
+            recordDate
+        });
 
         onSave(newRecord);
     }
 
-    return <form type="submit" onSubmit={formik.handleSubmit}>
+    return <form onSubmit={formik.handleSubmit}>
         <IonList>
             <IonItem>
                 <IonLabel position="floating">
