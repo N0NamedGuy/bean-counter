@@ -48,9 +48,11 @@ function getRandProduct() {
     const r = Math.floor(Math.random() * randProducts.length);
     return randProducts[r];
 }
+
+export const ProductAddForm = ({ products, onSave }) => {
     const formik = useFormik({
         initialValues: {
-            productName: ''
+            productName: null
         },
         validate: validateForm,
         onSubmit: onSubmit
