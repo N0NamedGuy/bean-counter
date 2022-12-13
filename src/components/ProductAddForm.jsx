@@ -82,7 +82,9 @@ function getRandProduct() {
 
         setSubmitting(false);
 
-        setPlaceholder(getRandProduct())
+        setPlaceholder(getRandProduct());
+
+        resetForm();
 
         onSave(newProduct);
     }
