@@ -97,7 +97,6 @@ export const ProductAddForm = ({ products, onSave }) => {
             <IonItem fill="solid"
                 className={`${formik.errors.productName &&
                     formik.touched.productName ? 'ion-invalid' : 'ion-valid'}`}>
-                <IonLabel position="floating">Novo produto</IonLabel>
                 <IonInput
                     clearInput
                     id="productName"

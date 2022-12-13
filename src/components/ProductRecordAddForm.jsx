@@ -70,9 +70,6 @@ export const ProductRecordAddForm = ({ product, onSave }) => {
     return <form onSubmit={formik.handleSubmit}>
         <IonList>
             <IonItem>
-                <IonLabel position="floating">
-                    Peso (gramas)
-                </IonLabel>
                 <IonInput
                     id="quantity"
                     name="quantity"
@@ -82,7 +79,11 @@ export const ProductRecordAddForm = ({ product, onSave }) => {
                     onIonChange={formik.handleChange}
                     onIonBlur={formik.handleBlur}
                     value={formik.values.quantity}
+                    placeholder={0}
                 />
+                <IonLabel>
+                    gramas
+                </IonLabel>
                 <IonNote slot="error">
                     {
                         formik.errors.quantity &&
