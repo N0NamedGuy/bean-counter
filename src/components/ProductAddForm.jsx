@@ -59,8 +59,6 @@ export const ProductAddForm = ({ products, onSave }) => {
         onSubmit: onSubmit
     });
 
-    const [placeholder, setPlaceholder] = useState();
-
     function validateForm(values) {
         const errors = {};
         if (!values.productName || values.productName.trim() === '') {
@@ -70,7 +68,7 @@ export const ProductAddForm = ({ products, onSave }) => {
     }
 
     useEffect(() => {
-        setPlaceholder(getRandProduct());
+        formik.setFieldValue('productName', getRandProduct());
     }, [])
 
     function onSubmit(values, { setSubmitting, resetForm }) {
@@ -85,9 +83,8 @@ export const ProductAddForm = ({ products, onSave }) => {
 
         setSubmitting(false);
 
-        setPlaceholder(getRandProduct());
-
         resetForm();
+        formik.setFieldValue('productName', getRandProduct());
 
         onSave(newProduct);
     }
@@ -107,7 +104,6 @@ export const ProductAddForm = ({ products, onSave }) => {
                     onIonChange={formik.handleChange}
                     onIonBlur={formik.handleBlur}
                     value={formik.values.productName}
-                    placeholder={placeholder}
                 />
                 <IonNote slot="error">
                     {
