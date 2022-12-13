@@ -32,7 +32,7 @@ const ProductsList = ({ products, onRemove }) => {
             {products.map((product) => {
                 return <IonItemSliding key={product.id}>
                     <IonItem button routerLink={`/details/${product.id}`}>
-                        <IonLabel>{product.name} [{product.id}]</IonLabel>
+                        <IonLabel>{product.name}</IonLabel>
                         <IonLabel slot="end">
                             {totals[product.id]}&nbsp;g
                         </IonLabel>

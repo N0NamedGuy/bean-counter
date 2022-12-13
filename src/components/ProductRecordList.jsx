@@ -13,7 +13,7 @@ export const ProductRecordList = ({ records, onRemove }) => {
             records && records.map((record) => {
                 return <IonItemSliding key={record.id}>
                     <IonItem>
-                        <IonLabel>{record.quantity}g [{record.id}]</IonLabel>
+                        <IonLabel>{record.quantity}g</IonLabel>
                         <IonLabel slot="end">
                             {record.recordDate}
                         </IonLabel>
