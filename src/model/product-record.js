@@ -14,8 +14,8 @@ export async function createProductRecord(productId, record) {
 
     product.records = [
         {
-            ...record,
-            id: getNewId(product.records, e => e.id)
+            id: getNewId(product.records, e => e.id),
+            ...record
         },
         ...product.records
     ];
