@@ -28,7 +28,7 @@ export async function createProduct(product) {
             ...product,
             id: getNewId(db, e => e.id)
         },
-        ...db,
+        ...db
     ];
 
     await saveProductDb(newDb);
