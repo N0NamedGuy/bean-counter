@@ -69,7 +69,7 @@ export const ProductAddForm = ({ products, onSave }) => {
 
     useEffect(() => {
         formik.setFieldValue('productName', getRandProduct());
-    }, [])
+    }, []);
 
     function onSubmit(values, { setSubmitting, resetForm }) {
         const newId = getNewId(products, e => e.id);
