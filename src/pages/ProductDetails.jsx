@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { ProductRecordList } from '../components/ProductRecordList';
@@ -10,7 +10,9 @@ import {
     IonTitle,
     IonToolbar,
     IonFooter,
-    useIonViewWillEnter
+    useIonViewWillEnter,
+    IonList,
+    IonItem
 } from '@ionic/react';
 import { ProductRecordAddForm } from '../components/ProductRecordAddForm';
 import { findProduct } from '../model/product';
@@ -23,6 +25,9 @@ const ProductDetails = () => {
     const [productError, setProductError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
+    const [quantity, setQuantity] = useState(null);
+
+
     useIonViewWillEnter((e) => {
         setIsLoading(true);
         findProduct(parseInt(id))
@@ -30,7 +35,6 @@ const ProductDetails = () => {
                 setProduct(product);
             })
             .catch((e) => {
-                console.error('on list', e)
                 setProductError(e);
             })
             .finally(() => {
@@ -38,23 +42,23 @@ const ProductDetails = () => {
             });
     }, [id]);
 
+    useEffect(() => {
+        const quantity = (product?.records || []).reduce((acc, cur) => acc + parseInt(cur.quantity, 10), 0);
+        setQuantity(quantity);
+    }, [product]);
+
     function addRecord(newRecord) {
         if (isLoading) {
             return;
         }
 
-        setIsLoading(true);
         createProductRecord(product.id, newRecord)
             .then((product) => {
                 setProduct(product);
             })
             .catch((e) => {
-                console.error('on add', e)
                 setProductError(e);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            })
+            });
     }
 
     function removeRecord(record) {
@@ -62,18 +66,12 @@ const ProductDetails = () => {
             return;
         }
 
-        setIsLoading(true);
-
         removeProductRecord(product.id, record.id)
             .then((product) => {
                 setProduct(product);
             })
             .catch((e) => {
-                console.error('on remove', e)
                 setProductError(e);
-            })
-            .finally(() => {
-                setIsLoading(false);
             });
     }
 
@@ -91,13 +89,27 @@ const ProductDetails = () => {
             {productError ? <h2>
                 Este produto já não existe (ou nunca existiu!)
             </h2> :
-                product && <ProductRecordList records={product.records}
-                    onRemove={removeRecord} />
-            }
+                product && <>
+                    <IonList>
+                        <IonItem>
+                            <h1>Total: {quantity} g</h1>
+                        </IonItem>
+                    </IonList>
+                    <ProductRecordAddForm product={product} onSave={addRecord} />
+                    <ProductRecordList records={product.records}
+                        onRemove={removeRecord} />
+                    {(!product.records || product.records.length === 0) &&
+                        <div className="ion-padding">
+                            <h2>
+                                Sem registos para este produto.
+                                Vá colher cenas pá!
+                            </h2>
+                        </div>
+                    }
+                </>}
         </IonContent>
 
         <IonFooter>
-            <ProductRecordAddForm product={product} onSave={addRecord} />
         </IonFooter>
     </IonPage>
 };

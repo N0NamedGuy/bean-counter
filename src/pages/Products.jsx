@@ -7,9 +7,7 @@ import {
     IonHeader,
     IonPage,
     IonTitle,
-    IonToolbar,
-    IonFooter,
-    useIonViewWillEnter
+    IonToolbar, useIonViewWillEnter
 } from '@ionic/react';
 import { ProductAddForm } from '../components/ProductAddForm';
 import { createProduct, listProducts, removeProduct } from '../model/product';
@@ -30,29 +28,21 @@ const Products = () => {
     }, [])
 
     function handleAddProduct(newProduct) {
-        setIsLoading(true);
         createProduct(newProduct)
             .then((products) => {
                 setProducts(products);
             })
-            .finally(() => {
-                setIsLoading(false);
-            });
     }
 
     function handleRemoveProduct(product) {
-        setIsLoading(true);
         removeProduct(product.id)
             .then((products) => {
                 setProducts(products);
-            })
-            .finally(() => {
-                setIsLoading(false);
             });
     }
 
     return <IonPage>
-        <IonHeader translucent={true}>
+        <IonHeader collapse>
             <IonToolbar>
                 <IonTitle>Conta-feijões</IonTitle>
                 <IonButtons slot="primary">
@@ -62,17 +52,14 @@ const Products = () => {
                 </IonButtons>
             </IonToolbar>
         </IonHeader>
-        <IonContent fullscreen>
+        <IonContent>
             {
                 isLoading ? <div>A carregar dados</div> : <>
+                    <ProductAddForm products={products} onSave={handleAddProduct} />
                     <ProductsList products={products} onRemove={handleRemoveProduct} />
                 </>
             }
         </IonContent>
-        <IonFooter>{
-                isLoading ? <></> : 
-                    <ProductAddForm products={products} onSave={handleAddProduct} />
-        }</IonFooter>
     </IonPage>
 };
 
