@@ -1,6 +1,7 @@
 import { useFormik } from 'formik'
 import { IonList, IonItem, IonLabel, IonInput, IonNote, IonButton } from '@ionic/react';
 import { getNewId } from '../utils';
+import { useEffect, useRef, useState } from 'react';
 
 const randProducts = [
     'Alho',
