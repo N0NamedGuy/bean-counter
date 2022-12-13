@@ -96,9 +96,12 @@ function getRandProduct() {
                     formik.touched.productName ? 'ion-invalid' : 'ion-valid'}`}>
                 <IonLabel position="floating">Nome do produto</IonLabel>
                 <IonInput
+                    clearInput
                     id="productName"
                     name="productName"
                     type="text"
+                    inputMode="text"
+                    autocorrect="on"
                     onIonChange={formik.handleChange}
                     onIonBlur={formik.handleBlur}
                     value={formik.values.productName}
