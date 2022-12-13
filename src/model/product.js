@@ -1,3 +1,5 @@
+import { getNewId } from '../utils';
+
 const PRODUCTS_KEY = 'storedState.products';
 
 let productsDbCache = null;
@@ -22,11 +24,16 @@ export async function createProduct(product) {
     const db = await loadProductDb();
 
     const newDb = [
-        product,
-        ...db
+        {
+            ...product,
+            id: getNewId(db, e => e.id)
+        },
+        ...db,
     ];
 
-    return saveProductDb(newDb);
+    await saveProductDb(newDb);
+
+    return await loadProductDb();
 }
 
 export async function updateProduct(newProduct) {
@@ -51,9 +58,11 @@ export async function updateProduct(newProduct) {
 export async function removeProduct(id) {
     const db = await loadProductDb();
 
-    const newDb = db.filter(p => p.id === id);
+    const newDb = db.filter(p => p.id !== id);
 
-    saveProductDb(newDb);
+    await saveProductDb(newDb);
+
+    return await loadProductDb();
 }
 
 async function loadProductDb() {

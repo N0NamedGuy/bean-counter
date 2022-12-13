@@ -1,3 +1,4 @@
+import { getNewId } from '../utils';
 import { findProduct, updateProduct } from './product'
 
 export async function listProductRecords(productId) {
@@ -12,7 +13,10 @@ export async function createProductRecord(productId, record) {
     const product = await findProduct(productId);
 
     product.records = [
-        record,
+        {
+            ...record,
+            id: getNewId(product.records, e => e.id)
+        },
         ...product.records
     ];
 
