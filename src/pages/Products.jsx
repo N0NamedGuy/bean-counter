@@ -19,20 +19,35 @@ const Products = () => {
 
     useIonViewWillEnter(() => {
         setIsLoading(true);
-        listProducts().then((products) => {
-            setProducts(products);
-        })
-        .finally(() => {
-            setIsLoading(false);
-        });
+        listProducts()
+            .then((products) => {
+                setProducts(products);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
     }, [])
 
     function handleAddProduct(newProduct) {
-        createProduct(newProduct);
+        setIsLoading(true);
+        createProduct(newProduct)
+            .then((products) => {
+                setProducts(products);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
     }
 
-    function removeProduct(product) {
-        removeProduct(product.id);
+    function handleRemoveProduct(product) {
+        setIsLoading(true);
+        removeProduct(product.id)
+            .then((products) => {
+                setProducts(products);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
     }
 
     return <IonPage>
