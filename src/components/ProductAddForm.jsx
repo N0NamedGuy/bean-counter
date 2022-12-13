@@ -2,7 +2,52 @@ import { useFormik } from 'formik'
 import { IonList, IonItem, IonLabel, IonInput, IonNote, IonButton } from '@ionic/react';
 import { getNewId } from '../utils';
 
-export const ProductAddForm = ({products, onSave}) => {
+const randProducts = [
+    'Alho',
+    'Abóbora',
+    'Agrião',
+    'Alface',
+    'Batata',
+    'Batata doce',
+    'Berinjela',
+    'Bróculos',
+    'Couve',
+    'Couve flor',
+    'Couve de bruxelas',
+    'Couve lombarda',
+    'Cebola',
+    'Cenoura',
+    'Chuchu',
+    'Coentros',
+    'Ervilha',
+    'Erva-doce',
+    'Fava',
+    'Feijão',
+    'Feijão verde',
+    'Gengibre',
+    'Grão de bico',
+    'Hortelã',
+    'Lentinha',
+    'Linhaça',
+    'Macadâmia',
+    'Melancia',
+    'Morango',
+    'Majericão',
+    'Nabo',
+    'Noz',
+    'Pêra',
+    'Rabanete',
+    'Salsa',
+    'Tomate',
+    'Tomate cereja',
+    'Tomilho',
+    'Kico'
+];
+
+function getRandProduct() {
+    const r = Math.floor(Math.random() * randProducts.length);
+    return randProducts[r];
+}
     const formik = useFormik({
         initialValues: {
             productName: ''
@@ -11,6 +56,8 @@ export const ProductAddForm = ({products, onSave}) => {
         onSubmit: onSubmit
     });
 
+    const [placeholder, setPlaceholder] = useState();
+
     function validateForm(values) {
         const errors = {};
         if (!values.productName || values.productName.trim() === '') {
@@ -18,6 +65,10 @@ export const ProductAddForm = ({products, onSave}) => {
         }
         return errors;
     }
+
+    useEffect(() => {
+        setPlaceholder(getRandProduct());
+    }, [])
 
     function onSubmit(values, { setSubmitting, resetForm }) {
         const newId = getNewId(products, e => e.id);
@@ -30,7 +81,8 @@ export const ProductAddForm = ({products, onSave}) => {
         }
 
         setSubmitting(false);
-        resetForm();
+
+        setPlaceholder(getRandProduct())
 
         onSave(newProduct);
     }
@@ -48,6 +100,7 @@ export const ProductAddForm = ({products, onSave}) => {
                     onIonChange={formik.handleChange}
                     onIonBlur={formik.handleBlur}
                     value={formik.values.productName}
+                    placeholder={placeholder}
                 />
                 <IonNote slot="error">
                     {
