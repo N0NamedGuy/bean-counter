@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
     IonBackButton, IonButtons,
-    IonContent,
-    IonHeader, IonList, IonPage,
+    IonContent, IonFooter, IonHeader, IonItem,
+    IonLabel, IonList, IonListHeader, IonPage,
     IonTitle,
-    IonToolbar,
-    IonItem,
-    IonLabel,
-    IonFooter
+    IonToolbar
 } from '@ionic/react';
-
+import { DataClearActionSheet } from '../components/DataClearActionSheet';
 export const Settings = () => {
+    const [deleteSheetOpen, setDeleteSheetOpen] = useState(false);
+
     return <IonPage>
         <IonHeader translucent={true}>
             <IonToolbar>
@@ -22,12 +21,22 @@ export const Settings = () => {
             </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>
-            <IonList>
+            <IonList inset>
+                <IonListHeader>
+                    <IonLabel>Gestão de dados</IonLabel>
+                </IonListHeader>
                 <IonItem button routerLink="/import">
                     <IonLabel>Importar</IonLabel>
                 </IonItem>
                 <IonItem button routerLink="/export">
                     <IonLabel>Exportar</IonLabel>
+                </IonItem>
+                <IonItem button onClick={() => setDeleteSheetOpen(true)}>
+                    <IonLabel color="danger">
+                        Eliminar todos os dados
+                    </IonLabel>
+                    <DataClearActionSheet isOpen={deleteSheetOpen}
+                        onDismiss={(isOpen) => setDeleteSheetOpen(isOpen)} />
                 </IonItem>
             </IonList>
         </IonContent>
@@ -38,4 +47,3 @@ export const Settings = () => {
         </IonFooter>
     </IonPage>
 };
-

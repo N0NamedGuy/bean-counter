@@ -65,6 +65,11 @@ export async function removeProduct(id) {
     return await loadProductDb();
 }
 
+export async function truncateProducts() {
+    return await saveProductDb([]);
+}
+
+
 async function loadProductDb() {
     if (!productsDbCache) {
         try {
