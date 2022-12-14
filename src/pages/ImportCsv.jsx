@@ -32,11 +32,13 @@ export const ImportCsv = () => {
                 };
             }
 
-            prod.records.push({
-                id: parseInt(recordId),
-                recordDate,
-                quantity: parseInt(recordQuantity)
-            });
+            if (recordId) {
+                prod.records.push({
+                    id: parseInt(recordId),
+                    recordDate,
+                    quantity: parseInt(recordQuantity)
+                });
+            }
         });
 
         const newDb = Object.values(productCache);

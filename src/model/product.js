@@ -81,17 +81,26 @@ export async function exportCsv() {
         'RECORD_QUANTITY'
     ];
 
+    const handleProductRows = (p) => {
+        if (p.records?.length > 0) {
+            return p.records.map((r) => {
+                return [
+                    p.id,
+                    `"${p.name}"`,
+                    r.id,
+                    r.recordDate,
+                    r.quantity
+                ];
+            })
+        } else {
+            return [[p.id, `"${p.name}"`]]
+        }
+    }
+
     const prods = db.reduce((prev, cur) => {
         return [
             ...prev,
-            ...cur.records.map((r) => {
-                return [
-                    cur.id,
-                    `"${cur.name}"`,
-                    r.id,
-                    r.recordDate,
-                    r.quantity];
-            })
+            ...handleProductRows(cur)
         ];
     }, []);
 
