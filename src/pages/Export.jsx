@@ -30,7 +30,7 @@ export const Export = () => {
                 <IonButtons slot="start">
                     <IonBackButton defaultHref="/" />
                 </IonButtons>
-                <IonTitle>Importar dados</IonTitle>
+                <IonTitle>Exportar dados</IonTitle>
             </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>
