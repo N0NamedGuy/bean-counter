@@ -9,6 +9,8 @@ import {
 import { DataClearActionSheet } from '../components/DataClearActionSheet';
 import { ThemeActionSheet } from '../components/ThemeActionSheet';
 import { ThemeContext } from '../contexts/ThemeContext';
+import { exportCsv } from '../model/product';
+import { fileTextDownload, getTodayDateISO } from '../utils';
 export const Settings = () => {
     const [themeSheetOpen, setThemeSheetOpen] = useState(false);
     const [deleteSheetOpen, setDeleteSheetOpen] = useState(false);
@@ -26,6 +28,11 @@ export const Settings = () => {
         }
 
         return dict[darkMode] || 'Desconhecido';
+    }
+
+    async function generateCsv() {
+        const csv = await exportCsv();
+        fileTextDownload(csv, `conta-feijoes-${getTodayDateISO()}.csv`, 'text/csv');
     }
 
     return <IonPage>
@@ -72,6 +79,15 @@ export const Settings = () => {
                     </IonLabel>
                     <DataClearActionSheet isOpen={deleteSheetOpen}
                         onDismiss={(isOpen) => setDeleteSheetOpen(isOpen)} />
+                </IonItem>
+            </IonList>
+
+            <IonList inset>
+                <IonListHeader>
+                    <IonLabel>Experimental</IonLabel>
+                </IonListHeader>
+                <IonItem button onClick={() => generateCsv()}>
+                    <IonLabel>Gerar CSV</IonLabel>
                 </IonItem>
             </IonList>
         </IonContent>

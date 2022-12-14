@@ -6,7 +6,7 @@ import {
 } from '@ionic/react';
 import { useFormik } from 'formik';
 
-import { getNewId } from '../utils';
+import { getNewId, getTodayDateISO } from '../utils';
 
 export const ProductRecordAddForm = ({ product, onSave }) => {
     const formik = useFormik({
@@ -18,17 +18,6 @@ export const ProductRecordAddForm = ({ product, onSave }) => {
         onSubmit: onSubmit,
     });
 
-
-    function getTodayDateISO() {
-        const now = new Date();
-
-        const year = now.getFullYear();
-        const month = `0${(now.getMonth() + 1)}`.slice(-2);
-        const day = `0${now.getDate()}`.slice(-2);
-
-        const formatted = `${year}-${month}-${day}`;
-        return formatted;
-    }
 
     function validateForm({ quantity, recordDate }) {
         const errors = {};

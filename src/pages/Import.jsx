@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useStorageState } from "../hooks/useStorageState";
 
-import { IonPage, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonText, IonList, IonItem, IonTextarea, IonLabel, IonButton } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonList, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 
 export const Import = () => {
     // eslint-disable-next-line

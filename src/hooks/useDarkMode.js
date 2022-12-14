@@ -20,7 +20,7 @@ export const useDarkMode = () => {
         return () => {
             prefersDark.removeEventListener('change', preferDarkChange);
         }
-    }, []);
+    }, [isDarkModePreference]);
 
     function applyDarkMode(darkModeType) {
         if (darkModeType === 'system') {

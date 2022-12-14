@@ -69,6 +69,42 @@ export async function truncateProducts() {
     return await saveProductDb([]);
 }
 
+export async function exportCsv() {
+        const db = await listProducts();
+
+        // CSV FORMAT
+        const header = [
+            'PROD_ID',
+            'PROD_NAME',
+            'RECORD_ID',
+            'RECORD_DATE',
+            'RECORD_QUANTITY'
+        ];
+
+        const prods = db.reduce((prev, cur) => {
+            return [
+                ...prev,
+                ...cur.records.map((r) => {
+                    return [
+                        cur.id,
+                        `"${cur.name}"`,
+                        r.id,
+                        r.recordDate,
+                        r.quantity];
+                })
+            ];
+        }, []);
+
+        const csv = [
+            header,
+            ...prods
+        ].map((line) => {
+            console.log({line})
+            return line.join(',');
+        }).join('\n');
+
+        return csv;
+}
 
 async function loadProductDb() {
     if (!productsDbCache) {

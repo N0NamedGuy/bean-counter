@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './App.css';
 
 import { Export } from './pages/Export';
@@ -19,22 +19,22 @@ import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
 
 /* Optional CSS utils that can be commented out */
-import '@ionic/react/css/padding.css';
+import '@ionic/react/css/display.css';
+import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/float-elements.css';
+import '@ionic/react/css/padding.css';
 import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
-import '@ionic/react/css/flex-utils.css';
-import '@ionic/react/css/display.css';
 
 /* Theme variables */
-import './theme/variables.css';
 import {
     Route
 } from 'react-router';
-import { Import } from './pages/Import';
-import { Settings } from './pages/Settings';
 import { ThemeContext } from './contexts/ThemeContext';
 import { useDarkMode } from './hooks/useDarkMode';
+import { Import } from './pages/Import';
+import { Settings } from './pages/Settings';
+import './theme/variables.css';
 
 setupIonicReact({});
 
