@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useStorageState } from "../hooks/useStorageState";
 
-import { IonPage, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonText, IonList, IonItem, IonTextarea, IonLabel, IonButton } from '@ionic/react';
 
 export const Import = () => {
     // eslint-disable-next-line
@@ -72,13 +72,20 @@ export const Import = () => {
             </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>
-            <span>Cole aqui os dados do seu outro dispositivo</span>
-            <br />
-            <button onClick={() => doImport()}>Importar</button>
-            <div>
-                <textarea ref={userDataEl} className="export-code" value={importedData}
-                    onChange={onImportDataChange}></textarea>
-            </div>
+            <IonList>
+                <IonItem>
+                    <IonTextarea ref={userDataEl}
+                        value={importedData}
+                        onIonChange={onImportDataChange}
+                        placeholder="Cole aqui os dados do seu outro dispositivo"
+                        rows={10}>
+                    </IonTextarea>
+                </IonItem>
+            </IonList>
+
+            <IonButton expand="block" onClick={() => doImport()}>
+                Importar
+            </IonButton>
         </IonContent>
     </IonPage>
 }
