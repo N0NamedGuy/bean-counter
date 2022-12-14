@@ -78,6 +78,7 @@ export const Import = () => {
                         value={importedData}
                         onIonChange={onImportDataChange}
                         placeholder="Cole aqui os dados do seu outro dispositivo"
+                        className="export-code"
                         rows={10}>
                     </IonTextarea>
                 </IonItem>

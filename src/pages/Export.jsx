@@ -10,7 +10,10 @@ import {
     IonButtons,
     IonBackButton,
     IonTitle,
-    IonContent
+    IonContent,
+    IonText,
+    IonButton,
+    IonTextarea
  } from '@ionic/react';
 
 export const Export = () => {
@@ -34,13 +37,18 @@ export const Export = () => {
             </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>
+            <IonText>
+                Estes são os dados que foram gravados no telemóvel.
+                Copia e cola para lugar seguro.
+            </IonText>
 
-            <span>Estes são os dados que foram gravados no telemóvel. Copie e cole para lugar seguro</span>
-            <br />
-            <button onClick={() => doCopy()}>Copiar</button>
-            <div>
-                <textarea ref={userDataEl} className="export-code" readOnly value={base64Data}></textarea>
-            </div>
+            <IonTextarea ref={userDataEl}
+                className="export-code"
+                readOnly
+                rows={10}
+                value={base64Data} />
+
+            <IonButton expand="block" onClick={() => doCopy()}>Copiar</IonButton>
         </IonContent>
     </IonPage>
 }
