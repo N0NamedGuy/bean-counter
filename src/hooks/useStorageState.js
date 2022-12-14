@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useIonViewWillEnter } from '@ionic/react';
+import { useEffect, useState } from 'react';
 
 function useStorageState(stateName, defaultVal) {
     const key = `storedState.${stateName}`;
@@ -29,7 +28,7 @@ function useStorageState(stateName, defaultVal) {
         }
     };
 
-    useIonViewWillEnter((e) => {
+    useEffect((e) => {
         loadStoredState();
     }, [stateName]);
 

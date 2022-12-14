@@ -1,15 +1,32 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import {
     IonBackButton, IonButtons,
     IonContent, IonFooter, IonHeader, IonItem,
     IonLabel, IonList, IonListHeader, IonPage,
-    IonTitle,
-    IonToolbar
+    IonTitle, IonToolbar
 } from '@ionic/react';
 import { DataClearActionSheet } from '../components/DataClearActionSheet';
+import { ThemeActionSheet } from '../components/ThemeActionSheet';
+import { ThemeContext } from '../contexts/ThemeContext';
 export const Settings = () => {
+    const [themeSheetOpen, setThemeSheetOpen] = useState(false);
     const [deleteSheetOpen, setDeleteSheetOpen] = useState(false);
+
+    const {
+        darkMode,
+        setDarkMode
+    } = useContext(ThemeContext);
+
+    function getDarkModeText() {
+        const dict = {
+            'system': 'Sistema',
+            'dark': 'Escuro',
+            'light': 'Claro'
+        }
+
+        return dict[darkMode] || 'Desconhecido';
+    }
 
     return <IonPage>
         <IonHeader translucent={true}>
@@ -21,6 +38,24 @@ export const Settings = () => {
             </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>
+            <IonList inset>
+                <IonListHeader>
+                    <IonLabel>Aparência</IonLabel>
+                </IonListHeader>
+                <IonItem button onClick={() => setThemeSheetOpen(true)}>
+                    <IonLabel>
+                        Tema
+                    </IonLabel>
+                    <IonLabel slot="end">
+                        <p>{getDarkModeText()}</p>
+                    </IonLabel>
+                    <ThemeActionSheet isOpen={themeSheetOpen}
+                        onDismiss={({ isOpen, action }) => {
+                            setThemeSheetOpen(isOpen);
+                            setDarkMode(action);
+                        }} />
+                </IonItem>
+            </IonList>
             <IonList inset>
                 <IonListHeader>
                     <IonLabel>Gestão de dados</IonLabel>
