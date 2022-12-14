@@ -1,6 +1,7 @@
 import { getNewId } from '../utils';
 
 const PRODUCTS_KEY = 'storedState.products';
+const SAFE_MODE = (process.env.NODE_ENV === 'production');
 
 let productsDbCache = null;
 
@@ -123,12 +124,28 @@ async function loadProductDb() {
         }
     }
 
-    return productsDbCache;
+    return productsDbCache || [];
 }
 
-export async function saveProductDb(newDb) {
-    const serialised = JSON.stringify(newDb);
+export function saveProductDb(newDb) {
 
-    localStorage.setItem(PRODUCTS_KEY, serialised);
-    productsDbCache = JSON.parse(serialised);
+    const doSaveProduct = () => {
+        const serialised = JSON.stringify(newDb);
+        localStorage.setItem(PRODUCTS_KEY, serialised);
+        productsDbCache = JSON.parse(serialised);
+    }
+
+    return new Promise((resolve, reject) => {
+        if (SAFE_MODE) {
+            if (window.confirm('Deseja guardar a mundaça? Este software ainda está em estado beta. Cuidado com as modificações.')) {
+                doSaveProduct();
+                resolve();
+            } else {
+                reject();
+            }
+        } else {
+            doSaveProduct();
+            resolve();
+        }
+    });
 }
