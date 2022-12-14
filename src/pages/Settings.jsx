@@ -89,6 +89,9 @@ export const Settings = () => {
                 <IonItem button onClick={() => generateCsv()}>
                     <IonLabel>Gerar CSV</IonLabel>
                 </IonItem>
+                <IonItem button routerLink="/importcsv">
+                    <IonLabel>Importar CSV</IonLabel>
+                </IonItem>
             </IonList>
         </IonContent>
         <IonFooter>

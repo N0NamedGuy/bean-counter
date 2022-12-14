@@ -35,6 +35,7 @@ import { useDarkMode } from './hooks/useDarkMode';
 import { Import } from './pages/Import';
 import { Settings } from './pages/Settings';
 import './theme/variables.css';
+import { ImportCsv } from './pages/ImportCsv';
 
 setupIonicReact({});
 
@@ -54,6 +55,7 @@ function App() {
                         <Route path="/settings" children={<Settings />} />
                         <Route path="/export" children={<Export />} />
                         <Route path="/import" children={<Import />} />
+                        <Route path="/importcsv" children={<ImportCsv />} />
                     </IonRouterOutlet>
                 </IonReactRouter>
             </IonApp>

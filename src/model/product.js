@@ -70,40 +70,39 @@ export async function truncateProducts() {
 }
 
 export async function exportCsv() {
-        const db = await listProducts();
+    const db = await listProducts();
 
-        // CSV FORMAT
-        const header = [
-            'PROD_ID',
-            'PROD_NAME',
-            'RECORD_ID',
-            'RECORD_DATE',
-            'RECORD_QUANTITY'
+    // CSV FORMAT
+    const header = [
+        'PROD_ID',
+        'PROD_NAME',
+        'RECORD_ID',
+        'RECORD_DATE',
+        'RECORD_QUANTITY'
+    ];
+
+    const prods = db.reduce((prev, cur) => {
+        return [
+            ...prev,
+            ...cur.records.map((r) => {
+                return [
+                    cur.id,
+                    `"${cur.name}"`,
+                    r.id,
+                    r.recordDate,
+                    r.quantity];
+            })
         ];
+    }, []);
 
-        const prods = db.reduce((prev, cur) => {
-            return [
-                ...prev,
-                ...cur.records.map((r) => {
-                    return [
-                        cur.id,
-                        `"${cur.name}"`,
-                        r.id,
-                        r.recordDate,
-                        r.quantity];
-                })
-            ];
-        }, []);
+    const csv = [
+        header,
+        ...prods
+    ].map((line) => {
+        return line.join(',');
+    }).join('\n');
 
-        const csv = [
-            header,
-            ...prods
-        ].map((line) => {
-            console.log({line})
-            return line.join(',');
-        }).join('\n');
-
-        return csv;
+    return csv;
 }
 
 async function loadProductDb() {
@@ -118,7 +117,7 @@ async function loadProductDb() {
     return productsDbCache;
 }
 
-async function saveProductDb(newDb) {
+export async function saveProductDb(newDb) {
     const serialised = JSON.stringify(newDb);
 
     localStorage.setItem(PRODUCTS_KEY, serialised);
