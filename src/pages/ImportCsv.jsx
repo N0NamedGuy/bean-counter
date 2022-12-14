@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import { useStorageState } from "../hooks/useStorageState";
 
 import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonList, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import { saveProductDb } from '../model/product';
@@ -7,6 +6,8 @@ import { saveProductDb } from '../model/product';
 export const ImportCsv = () => {
     const [importedData, setImportedData] = useState('');
     const userDataEl = useRef(null);
+
+    const fileInputRef = useRef(null);
 
     const doImport = () => {
         const fullCsv = importedData.split('\n');
@@ -45,6 +46,23 @@ export const ImportCsv = () => {
         saveProductDb(newDb);
     };
 
+    const importFile = (e) =>  {
+        const files = e.target.files;
+
+        if (!files || !files.length) {
+            return;
+        }
+
+        const file = files[0];
+
+        const reader = new FileReader();
+        reader.addEventListener('load', (e) => {
+            const csvData = e.target.result;
+            setImportedData(csvData);
+        });
+        reader.readAsText(file);
+    }
+
     const onImportDataChange = (event) => {
         setImportedData(event.target.value);
     };
@@ -59,6 +77,17 @@ export const ImportCsv = () => {
             </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>
+            <IonButton expand="full" onClick={() => fileInputRef.current.click()}>
+                Carregar ficheiro CSV
+                <input ref={fileInputRef}
+                type="file"
+                className="ion-hide"
+                id="csvFile"
+                name="csvFile"
+                accept=".csv"
+                onChange={importFile} />
+            </IonButton>
+
             <IonList>
                 <IonItem>
                     <IonTextarea ref={userDataEl}
