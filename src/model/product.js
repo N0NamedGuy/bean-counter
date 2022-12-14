@@ -11,7 +11,7 @@ export async function findProduct(id) {
         return p.id === id;
     })
 
-    return found;
+    return { ...found };
 }
 
 export async function listProducts() {
@@ -37,7 +37,7 @@ export async function createProduct(product) {
 }
 
 export async function updateProduct(newProduct) {
-    const storedProduct = await findProduct(newProduct);
+    const storedProduct = await findProduct(newProduct.id);
     const db = await loadProductDb();
 
     const updatedProduct = {
@@ -46,7 +46,7 @@ export async function updateProduct(newProduct) {
     };
 
     const storedProductIndex = db.findIndex((p) => {
-        return p.id = updatedProduct.id
+        return p.id === updatedProduct.id
     });
 
     db[storedProductIndex] = updatedProduct;
