@@ -74,7 +74,7 @@ export const ImportCsv = () => {
         <IonHeader translucent={true}>
             <IonToolbar>
                 <IonButtons slot="start">
-                    <IonBackButton defaultHref="/" />
+                    <IonBackButton defaultHref="/beans/settings" />
                 </IonButtons>
                 <IonTitle>Importar dados (CSV)</IonTitle>
             </IonToolbar>

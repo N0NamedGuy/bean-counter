@@ -31,7 +31,7 @@ export const Export = () => {
         <IonHeader translucent={true}>
             <IonToolbar>
                 <IonButtons slot="start">
-                    <IonBackButton defaultHref="/" />
+                    <IonBackButton defaultHref="/beans/settings" />
                 </IonButtons>
                 <IonTitle>Exportar dados</IonTitle>
             </IonToolbar>

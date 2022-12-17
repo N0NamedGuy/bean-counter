@@ -67,7 +67,7 @@ export const Import = () => {
         <IonHeader translucent={true}>
             <IonToolbar>
                 <IonButtons slot="start">
-                    <IonBackButton defaultHref="/" />
+                    <IonBackButton defaultHref="/beans/settings" />
                 </IonButtons>
                 <IonTitle>Importar dados</IonTitle>
             </IonToolbar>

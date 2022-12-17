@@ -19,7 +19,7 @@ export const DataClearActionSheet = ({ isOpen, onDismiss }) => {
 
             case 'export':
                 onDismiss(false);
-                history.push('/export');
+                history.push('/beans/settings/export');
                 break;
 
             case 'cancel':

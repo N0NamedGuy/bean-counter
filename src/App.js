@@ -1,15 +1,8 @@
 import React from 'react';
 import './App.css';
 
-import { Export } from './pages/Export';
-import { ProductDetails } from './pages/ProductDetails';
-import { Products } from './pages/Products';
-
-import { IonReactRouter } from '@ionic/react-router';
-
 import {
-    IonApp,
-    IonRouterOutlet, setupIonicReact
+    IonApp, setupIonicReact
 } from '@ionic/react';
 import '@ionic/react/css/core.css';
 
@@ -27,13 +20,9 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 
 /* Theme variables */
-import {
-    Route
-} from 'react-router';
 import { ThemeContext } from './contexts/ThemeContext';
 import { useDarkMode } from './hooks/useDarkMode';
-import { Import } from './pages/Import';
-import { Settings } from './pages/Settings';
+import { Tabs } from './pages/Tabs';
 import './theme/variables.css';
 import { ImportCsv } from './pages/ImportCsv';
 
@@ -48,16 +37,7 @@ function App() {
             setDarkMode
         }}>
             <IonApp>
-                <IonReactRouter basename="beans">
-                    <IonRouterOutlet>
-                        <Route path="/" exact children={<Products />} />
-                        <Route path="/details/:id" exact children={<ProductDetails />} />
-                        <Route path="/settings" children={<Settings />} />
-                        <Route path="/export" children={<Export />} />
-                        <Route path="/import" children={<Import />} />
-                        <Route path="/importcsv" children={<ImportCsv />} />
-                    </IonRouterOutlet>
-                </IonReactRouter>
+                <Tabs />
             </IonApp>
         </ThemeContext.Provider>
     );

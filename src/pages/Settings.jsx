@@ -38,9 +38,6 @@ export const Settings = () => {
     return <IonPage>
         <IonHeader translucent={true}>
             <IonToolbar>
-                <IonButtons slot="start">
-                    <IonBackButton defaultHref="/" />
-                </IonButtons>
                 <IonTitle>Defini&ccedil;&otilde;es</IonTitle>
             </IonToolbar>
         </IonHeader>
@@ -67,10 +64,10 @@ export const Settings = () => {
                 <IonListHeader>
                     <IonLabel>Gestão de dados</IonLabel>
                 </IonListHeader>
-                <IonItem button routerLink="/import">
+                <IonItem button routerLink="/beans/settings/import">
                     <IonLabel>Importar</IonLabel>
                 </IonItem>
-                <IonItem button routerLink="/export">
+                <IonItem button routerLink="/beans/settings/export">
                     <IonLabel>Exportar</IonLabel>
                 </IonItem>
                 <IonItem button onClick={() => setDeleteSheetOpen(true)}>
@@ -89,7 +86,7 @@ export const Settings = () => {
                 <IonItem button onClick={() => generateCsv()}>
                     <IonLabel>Gerar CSV</IonLabel>
                 </IonItem>
-                <IonItem button routerLink="/importcsv">
+                <IonItem button routerLink="/beans/settings/importcsv">
                     <IonLabel>Importar CSV</IonLabel>
                 </IonItem>
             </IonList>

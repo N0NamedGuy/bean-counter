@@ -98,7 +98,7 @@ const ProductDetails = () => {
             <IonToolbar>
                 <IonTitle>{product && product.name}</IonTitle>
                 <IonButtons slot="start">
-                    <IonBackButton defaultHref="/" />
+                    <IonBackButton defaultHref="/beans/products" />
                 </IonButtons>
                 <IonButtons slot="end">
                     <IonButton onClick={() => openEditModal()}>Editar</IonButton>
