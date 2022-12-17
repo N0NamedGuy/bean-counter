@@ -1,10 +1,11 @@
 import React, { useRef, useState } from 'react';
 
-import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonList, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonListHeader, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import { saveProductDb } from '../model/product';
 
 export const ImportCsv = () => {
     const [importedData, setImportedData] = useState('');
+    const [importErrors, setImportErrors] = useState([]);
     const userDataEl = useRef(null);
 
     const fileInputRef = useRef(null);
@@ -16,16 +17,40 @@ export const ImportCsv = () => {
 
         const productCache = {};
 
-        csv.map(line => line.split(',')).forEach(([
-            productId,
-            productName,
-            recordId,
-            recordDate,
-            recordQuantity
-        ]) => {
+        const importErrors = [];
+
+        const addError = (desc, index, line) => {
+            index = index + 1;
+            console.error(desc, index, line);
+            importErrors.push({ desc, index, line,
+            key: new Date().getTime() });
+        }
+
+        csv.forEach((line, index) => {
+            if (line.trim() === '') {
+                return;
+            }
+
+            const [
+                productId,
+                productName,
+                recordId,
+                recordDate,
+                recordQuantity
+            ] = line.trim().split(',');
+
             let prod = productCache[productId];
 
             if (!prod) {
+                if (!productId || productId.trim() === '') {
+                    addError('Falta ID de produto (PROD_ID)', index, line);
+                    return;
+                }
+
+                if (!productName || productName.trim() === '') {
+                    addError('Falta nome de produto (PROD_NAME)', index, line);
+                    return;
+                }
                 prod = productCache[productId] = {
                     id: parseInt(productId),
                     name: productName.replace(/^"(.*)"$/, '$1'),
@@ -34,6 +59,21 @@ export const ImportCsv = () => {
             }
 
             if (recordId) {
+                if (!recordId || recordId.trim() === '') {
+                    addError('Falta ID de registo de produto', index, line);
+                    return;
+                }
+
+                if (!recordDate || recordDate.trim() === '') {
+                    addError('Falta registo de data', index, line);
+                    return;
+                }
+
+                if (!recordQuantity || recordQuantity.trim() === '') {
+                    addError('Falta quantidade', index, line);
+                    return;
+                }
+
                 prod.records.push({
                     id: parseInt(recordId),
                     recordDate,
@@ -42,14 +82,26 @@ export const ImportCsv = () => {
             }
         });
 
+        setImportErrors(importErrors);
+
+        if (importErrors.length > 0) {
+            if (!window.confirm('Houveram erros na importação do CSV... Continuar com a importação?')) {
+                return;
+            }
+        }
+
         const newDb = Object.values(productCache);
         saveProductDb(newDb)
             .then(() => {
-                window.alert('Dados importados do CSV!')
+                if (importErrors.length === 0) {
+                    window.alert('Dados importados do CSV!')
+                } else {
+                    window.alert('Dados importados com erros...')
+                }
             });
     };
 
-    const importFile = (e) =>  {
+    const importFile = (e) => {
         const files = e.target.files;
 
         if (!files || !files.length) {
@@ -83,12 +135,12 @@ export const ImportCsv = () => {
             <IonButton expand="full" onClick={() => fileInputRef.current.click()}>
                 Carregar ficheiro CSV
                 <input ref={fileInputRef}
-                type="file"
-                className="ion-hide"
-                id="csvFile"
-                name="csvFile"
-                accept=".csv"
-                onChange={importFile} />
+                    type="file"
+                    className="ion-hide"
+                    id="csvFile"
+                    name="csvFile"
+                    accept=".csv"
+                    onChange={importFile} />
             </IonButton>
 
             <IonList>
@@ -102,6 +154,28 @@ export const ImportCsv = () => {
                     </IonTextarea>
                 </IonItem>
             </IonList>
+
+            {
+                (importErrors.length > 0) && <IonList>
+                    <IonListHeader>
+                        <IonLabel color="danger">Erros de importação</IonLabel>
+                    </IonListHeader>
+
+                    {
+                        importErrors.map((err) => {
+                            return <IonItem key={err.key}>
+                                <IonLabel>
+                                    {err.desc}
+                                    <p>{err.line}</p>
+                                </IonLabel>
+                                <IonLabel slot="end">
+                                    Linha {err.index}
+                                </IonLabel>
+                            </IonItem>
+                        })
+                    }
+                </IonList>
+            }
 
             <IonButton expand="block" onClick={() => doImport()}>
                 Importar CSV
