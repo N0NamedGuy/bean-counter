@@ -40,6 +40,7 @@ export const useDarkMode = () => {
     // Add or remove the "dark" class based on if the media query matches
     function toggleColorScheme(shouldAdd) {
         document.body.classList.toggle('dark', shouldAdd);
+        document.body.classList.toggle('light', !shouldAdd);
     }
 
     return [isDarkModePreference, setDarkMode];
