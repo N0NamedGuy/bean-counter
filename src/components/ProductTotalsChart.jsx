@@ -13,7 +13,16 @@ const initialTotalsChartOptions = {
     plotOptions: {
         pie: {
             dataLabels: {
-                enabled: true
+                enabled: true,
+                distance: -10,
+                format: '<b>{point.name}</b><br/>'
+                    + '{point.percentage:.1f} %<br/>'
+                    + '{point.y} g<br/>',
+                    filter: {
+                        property: 'percentage',
+                        operator: '>',
+                        value: 10
+                    }
             },
             showInLegend: true
         }
@@ -37,6 +46,8 @@ export const ProductTotalsChart = ({ productsWithTotals }) => {
                 name: p.name,
                 y: p.total
             };
+        }).sort((a, b) => {
+            return b.y - a.y;
         });
 
         setTotalsChartOptions((opts) => {
