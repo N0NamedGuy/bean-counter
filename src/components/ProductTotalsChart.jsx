@@ -1,6 +1,7 @@
 import * as Highcharts from 'highcharts';
 import HighchartsReact from "highcharts-react-official";
 import { useEffect, useRef, useState } from "react";
+import { humanWeight } from '../utils';
 
 const initialTotalsChartOptions = {
     title: {
@@ -25,6 +26,12 @@ const initialTotalsChartOptions = {
                     }
             },
             showInLegend: true
+        }
+    },
+    tooltip: {
+        formatter: function () {
+            console.log('this is', this)
+            return `<b>${this.key}</b><br/>${humanWeight(this.point.y)}`
         }
     },
     series: [{

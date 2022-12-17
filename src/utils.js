@@ -26,3 +26,13 @@ export function fileTextDownload(content, fileName, mimeType) {
     link.click();
     URL.revokeObjectURL(file);
 }
+
+export function humanWeight(grams, round = 3) {
+    if (grams > 500000) {
+        return (grams / 1000000).toFixed(round) + ' t';
+    } else if (grams > 500) {
+        return (grams / 1000).toFixed(round) + ' kg';
+    } else {
+        return grams.toFixed(round) + ' g';
+    }
+}

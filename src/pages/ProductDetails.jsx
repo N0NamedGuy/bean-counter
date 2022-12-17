@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { ProductRecordList } from '../components/ProductRecordList';
 
 import {
-    IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonList, IonPage,
+    IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage,
     IonTitle,
     IonToolbar, useIonModal, useIonViewWillEnter
 } from '@ionic/react';
@@ -12,6 +12,7 @@ import { ProductEditModal } from '../components/ProductEditModal';
 import { ProductRecordAddForm } from '../components/ProductRecordAddForm';
 import { findProduct, updateProduct } from '../model/product';
 import { createProductRecord, removeProductRecord } from '../model/product-record';
+import { humanWeight, isBigUnit } from '../utils';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -113,7 +114,7 @@ const ProductDetails = () => {
                 product && <>
                     <IonList>
                         <IonItem>
-                            <h1>Total: {quantity} g</h1>
+                            <h1>Total: {humanWeight(quantity)}</h1>
                         </IonItem>
                     </IonList>
                     <ProductRecordAddForm product={product} onSave={addRecord} />

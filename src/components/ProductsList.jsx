@@ -6,6 +6,7 @@ import {
     IonLabel,
     IonList
 } from '@ionic/react';
+import { humanWeight } from '../utils';
 
 const ProductsList = ({ productsWithTotals, onRemove }) => {
     return productsWithTotals && productsWithTotals.length > 0 ?
@@ -15,7 +16,7 @@ const ProductsList = ({ productsWithTotals, onRemove }) => {
                     <IonItem button routerLink={`/beans/products/${product.id}`}>
                         <IonLabel>{product.name}</IonLabel>
                         <IonLabel slot="end">
-                            {product.total}&nbsp;g
+                            {humanWeight(product.total, 1)}
                         </IonLabel>
                     </IonItem>
 
