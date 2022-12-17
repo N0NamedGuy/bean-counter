@@ -115,7 +115,7 @@ export async function exportCsv() {
     return csv;
 }
 
-export async function calcTotalsByProduct() {
+export async function listProductsWithTotals() {
     const products = await listProducts();
 
     const newTotals = (products || []).map(p => {

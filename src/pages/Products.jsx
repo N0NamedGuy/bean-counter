@@ -9,7 +9,7 @@ import {
     IonToolbar, useIonViewWillEnter
 } from '@ionic/react';
 import { ProductAddForm } from '../components/ProductAddForm';
-import { calcTotalsByProduct, createProduct, removeProduct } from '../model/product';
+import { listProductsWithTotals, createProduct, removeProduct } from '../model/product';
 
 const Products = () => {
     const [products, setProducts] = useState(null);
@@ -17,7 +17,7 @@ const Products = () => {
 
     useIonViewWillEnter(() => {
         setIsLoading(true);
-        calcTotalsByProduct()
+        listProductsWithTotals()
             .then((products) => {
                 setProducts(products);
             })
@@ -28,13 +28,13 @@ const Products = () => {
 
     async function handleAddProduct(newProduct) {
         await createProduct(newProduct);
-        const productWithTotals = await calcTotalsByProduct();
+        const productWithTotals = await listProductsWithTotals();
         setProducts(productWithTotals);
     }
 
     async function handleRemoveProduct(product) {
         await removeProduct(product.id);
-        const productWithTotals = await calcTotalsByProduct();
+        const productWithTotals = await listProductsWithTotals();
         setProducts(productWithTotals);
     }
 

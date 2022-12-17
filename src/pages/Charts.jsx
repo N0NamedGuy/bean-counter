@@ -1,14 +1,14 @@
 import { IonContent, IonPage, useIonViewWillEnter } from "@ionic/react";
 import { useState } from "react";
 import { ProductTotalsChart } from "../components/ProductTotalsChart";
-import { calcTotalsByProduct } from "../model/product";
+import { listProductsWithTotals } from "../model/product";
 
 
 export const Charts = () => {
     const [productsWithTotals, setProductsWithTotals] = useState(null);
 
     useIonViewWillEnter(() => {
-        calcTotalsByProduct()
+        listProductsWithTotals()
             .then((totals) => {
                 setProductsWithTotals(totals);
             })
