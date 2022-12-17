@@ -43,7 +43,10 @@ export const ImportCsv = () => {
         });
 
         const newDb = Object.values(productCache);
-        saveProductDb(newDb);
+        saveProductDb(newDb)
+            .then(() => {
+                window.alert('Dados importados do CSV!')
+            });
     };
 
     const importFile = (e) =>  {
