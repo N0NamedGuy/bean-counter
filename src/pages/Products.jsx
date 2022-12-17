@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ProductsList } from '../components/ProductsList';
 
 import {
-    IonButton, IonButtons,
     IonContent,
     IonHeader,
     IonPage,
@@ -10,7 +9,7 @@ import {
     IonToolbar, useIonViewWillEnter
 } from '@ionic/react';
 import { ProductAddForm } from '../components/ProductAddForm';
-import { createProduct, listProducts, removeProduct } from '../model/product';
+import { calcTotalsByProduct, createProduct, removeProduct } from '../model/product';
 
 const Products = () => {
     const [products, setProducts] = useState(null);
@@ -18,7 +17,7 @@ const Products = () => {
 
     useIonViewWillEnter(() => {
         setIsLoading(true);
-        listProducts()
+        calcTotalsByProduct()
             .then((products) => {
                 setProducts(products);
             })
@@ -27,36 +26,29 @@ const Products = () => {
             });
     }, [])
 
-    function handleAddProduct(newProduct) {
-        createProduct(newProduct)
-            .then((products) => {
-                setProducts(products);
-            })
+    async function handleAddProduct(newProduct) {
+        await createProduct(newProduct);
+        const productWithTotals = await calcTotalsByProduct();
+        setProducts(productWithTotals);
     }
 
-    function handleRemoveProduct(product) {
-        removeProduct(product.id)
-            .then((products) => {
-                setProducts(products);
-            });
+    async function handleRemoveProduct(product) {
+        await removeProduct(product.id);
+        const productWithTotals = await calcTotalsByProduct();
+        setProducts(productWithTotals);
     }
 
     return <IonPage>
         <IonHeader collapse>
             <IonToolbar>
-                <IonTitle>Conta-feijões</IonTitle>
-                <IonButtons slot="primary">
-                    <IonButton routerLink='/settings'>
-                        Definições
-                    </IonButton>
-                </IonButtons>
+                <IonTitle>Produtos</IonTitle>
             </IonToolbar>
         </IonHeader>
         <IonContent>
             {
                 isLoading ? <div>A carregar dados</div> : <>
                     <ProductAddForm products={products} onSave={handleAddProduct} />
-                    <ProductsList products={products} onRemove={handleRemoveProduct} />
+                    <ProductsList productsWithTotals={products} onRemove={handleRemoveProduct} />
                 </>
             }
         </IonContent>

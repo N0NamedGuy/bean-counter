@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from 'react';
-
 import {
     IonItem,
     IonItemOption,
@@ -9,32 +7,15 @@ import {
     IonList
 } from '@ionic/react';
 
-const ProductsList = ({ products, onRemove }) => {
-    const [totals, setTotals] = useState({});
-
-    useEffect(() => {
-        const newTotals = (products || []).map(p => {
-            return {
-                id: p.id,
-                total: p.records.reduce((acc, cur) => acc + cur.quantity, 0)
-            }
-        })
-            .reduce((acc, cur) => {
-                acc[cur.id] = cur.total;
-                return acc;
-            }, {});
-
-        setTotals(newTotals);
-    }, [products]);
-
-    return products && products.length > 0 ?
+const ProductsList = ({ productsWithTotals, onRemove }) => {
+    return productsWithTotals && productsWithTotals.length > 0 ?
         <IonList>
-            {products.map((product) => {
+            {productsWithTotals.map((product) => {
                 return <IonItemSliding key={product.id}>
                     <IonItem button routerLink={`/beans/products/${product.id}`}>
                         <IonLabel>{product.name}</IonLabel>
                         <IonLabel slot="end">
-                            {totals[product.id]}&nbsp;g
+                            {product.total}&nbsp;g
                         </IonLabel>
                     </IonItem>
 

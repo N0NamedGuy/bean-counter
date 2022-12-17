@@ -24,7 +24,7 @@ import { ThemeContext } from './contexts/ThemeContext';
 import { useDarkMode } from './hooks/useDarkMode';
 import { Tabs } from './pages/Tabs';
 import './theme/variables.css';
-import { ImportCsv } from './pages/ImportCsv';
+import './charts.scss';
 
 setupIonicReact({});
 

@@ -10,6 +10,8 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "formik": "^2.2.9",
+    "highcharts": "^10.3.2",
+    "highcharts-react-official": "^3.1.0",
     "ionicons": "^6.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -42,6 +44,7 @@
   "packageManager": "yarn@3.3.0",
   "devDependencies": {
     "eslint": "^8.0.0",
-    "eslint-config-react-app": "^7.0.1"
+    "eslint-config-react-app": "^7.0.1",
+    "sass": "^1.57.0"
   }
 }

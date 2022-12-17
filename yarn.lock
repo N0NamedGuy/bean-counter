@@ -3967,12 +3967,15 @@ __metadata:
     eslint: ^8.0.0
     eslint-config-react-app: ^7.0.1
     formik: ^2.2.9
+    highcharts: ^10.3.2
+    highcharts-react-official: ^3.1.0
     ionicons: ^6.0.4
     react: ^18.2.0
     react-dom: ^18.2.0
     react-router: 5
     react-router-dom: 5
     react-scripts: 5.0.0
+    sass: ^1.57.0
   languageName: unknown
   linkType: soft
 
@@ -4286,7 +4289,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:^3.4.2, chokidar@npm:^3.5.3":
+"chokidar@npm:>=3.0.0 <4.0.0, chokidar@npm:^3.4.2, chokidar@npm:^3.5.3":
   version: 3.5.3
   resolution: "chokidar@npm:3.5.3"
   dependencies:
@@ -6723,6 +6726,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"highcharts-react-official@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "highcharts-react-official@npm:3.1.0"
+  peerDependencies:
+    highcharts: ">=6.0.0"
+    react: ">=16.8.0"
+  checksum: 13ea12e8f778d4b7dac735082b6f36ed3c852b7c31823812ba42ea78e72ce21b90e62daf0a2bc35bb6db07705a9f19cf7b21c03455c6f3fb14e7cab8d35b0ecf
+  languageName: node
+  linkType: hard
+
+"highcharts@npm:^10.3.2":
+  version: 10.3.2
+  resolution: "highcharts@npm:10.3.2"
+  checksum: 43cb42b24c3d6effc03d021f410a760322092ebd7012b60c2c475aa48a426af6c2a0a2937707bfc1c7aab089f0cc968c9aec3a9a1147e87ffc463b0adfb61ad4
+  languageName: node
+  linkType: hard
+
 "history@npm:^4.9.0":
   version: 4.10.1
   resolution: "history@npm:4.10.1"
@@ -7009,6 +7029,13 @@ __metadata:
   version: 9.0.16
   resolution: "immer@npm:9.0.16"
   checksum: e9a5ca65c929b329da7a3b7beccf7984271cda7bdd47b2cab619eac3277dcd56598c211b55cc340786b6eff0c06652ac018808d9fd744443f06882364dece6bc
+  languageName: node
+  linkType: hard
+
+"immutable@npm:^4.0.0":
+  version: 4.1.0
+  resolution: "immutable@npm:4.1.0"
+  checksum: b9bc1f14fb18eb382d48339c064b24a1f97ae4cf43102e0906c0a6e186a27afcd18b55ca4a0b63c98eefb58143e2b5ebc7755a5fb4da4a7ad84b7a6096ac5b13
   languageName: node
   linkType: hard
 
@@ -11203,6 +11230,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sass@npm:^1.57.0":
+  version: 1.57.0
+  resolution: "sass@npm:1.57.0"
+  dependencies:
+    chokidar: ">=3.0.0 <4.0.0"
+    immutable: ^4.0.0
+    source-map-js: ">=0.6.2 <2.0.0"
+  bin:
+    sass: sass.js
+  checksum: fb6358b9541dc7a5bc23dbbae85223e99fbadc1f4ae911e7c32c6e22fd7b617e20a0e8cd1213f23c97c621b067bfb0b9ca45e65d6ce4ca5fea5949f41bd428ed
+  languageName: node
+  linkType: hard
+
 "sax@npm:~1.2.4":
   version: 1.2.4
   resolution: "sax@npm:1.2.4"
@@ -11504,7 +11544,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-js@npm:^1.0.1, source-map-js@npm:^1.0.2":
+"source-map-js@npm:>=0.6.2 <2.0.0, source-map-js@npm:^1.0.1, source-map-js@npm:^1.0.2":
   version: 1.0.2
   resolution: "source-map-js@npm:1.0.2"
   checksum: c049a7fc4deb9a7e9b481ae3d424cc793cb4845daa690bc5a05d428bf41bf231ced49b4cf0c9e77f9d42fdb3d20d6187619fc586605f5eabe995a316da8d377c

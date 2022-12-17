@@ -115,6 +115,20 @@ export async function exportCsv() {
     return csv;
 }
 
+export async function calcTotalsByProduct() {
+    const products = await listProducts();
+
+    const newTotals = (products || []).map(p => {
+        return {
+            id: p.id,
+            name: p.name,
+            total: p.records.reduce((acc, cur) => acc + cur.quantity, 0)
+        }
+    });
+
+    return newTotals;
+}
+
 async function loadProductDb() {
     if (!productsDbCache) {
         try {
