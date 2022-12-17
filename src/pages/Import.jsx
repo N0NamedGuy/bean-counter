@@ -1,11 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { useStorageState } from "../hooks/useStorageState";
 
 import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonList, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { saveProductDb } from '../model/product';
 
 export const Import = () => {
     // eslint-disable-next-line
-    const [products, setProducts] = useStorageState('products', []);
     const [importedData, setImportedData] = useState('');
     const userDataEl = useRef(null);
 
@@ -47,8 +46,10 @@ export const Import = () => {
                     return;
                 }
 
-                setProducts(data);
-                window.alert('Dados importados!')
+                saveProductDb(data)
+                    .then(() => {
+                        window.alert('Dados importados!');
+                    });
 
             } catch (e) {
                 window.alert('Os dados podem estar inválidos ou copiaste isso mal!');
