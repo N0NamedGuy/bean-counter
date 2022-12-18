@@ -151,7 +151,7 @@ export function saveProductDb(newDb) {
 
     return new Promise((resolve, reject) => {
         if (SAFE_MODE) {
-            if (window.confirm('Deseja guardar a mundaça? Este software ainda está em estado beta. Cuidado com as modificações.')) {
+            if (window.confirm('Deseja guardar a mudança? Este software ainda está em estado beta. Cuidado com as modificações.')) {
                 doSaveProduct();
                 resolve();
             } else {
