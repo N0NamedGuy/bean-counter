@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { ProductRecordList } from '../components/ProductRecordList';
 
@@ -10,7 +10,7 @@ import {
 } from '@ionic/react';
 import { ProductEditModal } from '../components/ProductEditModal';
 import { ProductRecordAddForm } from '../components/ProductRecordAddForm';
-import { findProduct, updateProduct } from '../model/product';
+import { findProduct, removeProduct, updateProduct } from '../model/product';
 import { createProductRecord, removeProductRecord } from '../model/product-record';
 import { humanWeight, isBigUnit } from '../utils';
 
@@ -22,6 +22,8 @@ const ProductDetails = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const [quantity, setQuantity] = useState(null);
+
+    const history = useHistory();
 
     const [present, dismiss] = useIonModal(ProductEditModal, {
         onDismiss: (data, role) => { dismiss(data, role) },
@@ -82,11 +84,20 @@ const ProductDetails = () => {
             });
     }
 
+    function handleRemoveProduct(product) {
+        removeProduct(product.id)
+            .then(() => {
+                history.replace('/beans');
+            });
+    }
+
     function openEditModal() {
         present({
             onWillDismiss: (ev) => {
                 if (ev.detail.role === 'save') {
                     handleUpdateProduct(ev.detail.data);
+                } else if (ev.detail.role === 'remove') {
+                    handleRemoveProduct(ev.detail.data);
                 }
             },
             canDismiss: true,

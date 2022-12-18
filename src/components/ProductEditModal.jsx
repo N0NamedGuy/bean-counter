@@ -1,4 +1,4 @@
-import { IonButton, IonButtons, IonContent, IonHeader, IonInput, IonItem, IonList, IonNote, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonList, IonNote, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { useFormik } from 'formik';
 
 export const ProductEditModal = ({ product, onDismiss }) => {
@@ -26,6 +26,10 @@ export const ProductEditModal = ({ product, onDismiss }) => {
 
         setSubmitting(false);
         onDismiss(newProduct, 'save');
+    }
+
+    function handleRemove() {
+        onDismiss(product, 'remove');
     }
 
     return <IonPage>
@@ -67,6 +71,11 @@ export const ProductEditModal = ({ product, onDismiss }) => {
                             type="submit">
                             Alterar
                         </IonButton>
+                    </IonItem>
+                    <IonItem>
+                        <IonLabel button onClick={() => handleRemove()} color="danger">
+                            Apagar produto
+                        </IonLabel>
                     </IonItem>
                 </IonList>
             </form>
