@@ -12,7 +12,7 @@ import { ProductEditModal } from '../components/ProductEditModal';
 import { ProductRecordAddForm } from '../components/ProductRecordAddForm';
 import { findProduct, removeProduct, updateProduct } from '../model/product';
 import { createProductRecord, removeProductRecord } from '../model/product-record';
-import { humanWeight, isBigUnit } from '../utils';
+import { humanWeight } from '../utils';
 
 const ProductDetails = () => {
     const { id } = useParams();
