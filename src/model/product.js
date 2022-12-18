@@ -209,10 +209,10 @@ export async function listProductsByRecordFnWithTotals(keyFn, keyName) {
 export async function listProductsByRecordYearWithTotals() {
     return (await listProductsByRecordFnWithTotals((r) => {
         const year = r.recordDate.split('-')[0];
-        return parseInt(year);
+        return year;
     }, 'year')).sort((a, b) => {
-        return (b.year ?? Number.MAX_SAFE_INTEGER) -
-            (a.year ?? Number.MAX_SAFE_INTEGER);
+        return parseInt(b.year ?? Number.MAX_SAFE_INTEGER) -
+            parseInt(a.year ?? Number.MAX_SAFE_INTEGER);
     })
 }
 
