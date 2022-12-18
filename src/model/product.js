@@ -186,24 +186,27 @@ export async function listProductsByRecordFnWithTotals(keyFn, keyName) {
                 }
             ]
         }, []);
+    
+    const productsWithNoRecords = products.filter((p) => {
+        return p.records?.length === 0;
+    }).map((p) => {
+        return {
+            ...p,
+            total: 0
+        }
+    })
 
-    const productsWithNoRecords = {
-        total: 0,
-        [keyName]: null,
-        products: products.filter((p) => {
-            return p.records?.length === 0;
-        }).map((p) => {
-            return {
-                ...p,
-                total: 0
-            }
-        })
-    };
+    const groupedProducts = productsByKey;
 
-    return [
-        productsWithNoRecords,
-        ...productsByKey
-    ];
+    if (productsWithNoRecords.length > 0) {
+        groupedProducts.push({
+            [keyName]: null,
+            total: 0,
+            products: productsWithNoRecords
+        });
+    }
+
+    return groupedProducts;
 }
 
 export async function listProductsByRecordYearWithTotals() {

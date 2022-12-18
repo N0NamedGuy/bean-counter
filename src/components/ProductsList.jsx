@@ -33,15 +33,11 @@ const ProductListWithTotals = ({ products, year, total }) => {
                     </IonLabel>
                 </IonItem>
             })}
-        </IonItemGroup>
-        :
-        <div className="ion-padding">
-            <h2>Ainda não adicionou nenhum produto</h2>
-        </div>
+        </IonItemGroup> : null
 }
 
 const ProductsList = ({ productsByYear, onRemove }) => {
-    return productsByYear ?
+    return productsByYear && productsByYear.length > 0 ?
         <IonList>
             {productsByYear.map(({ year, total, products }) => {
                 return <ProductListWithTotals products={products}
