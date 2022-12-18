@@ -87,7 +87,7 @@ const ProductDetails = () => {
     function handleRemoveProduct(product) {
         removeProduct(product.id)
             .then(() => {
-                history.replace('/beans');
+                history.replace('/beans/products');
             });
     }
 
