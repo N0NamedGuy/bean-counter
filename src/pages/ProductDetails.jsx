@@ -125,7 +125,10 @@ const ProductDetails = () => {
                 product && <>
                     <IonList>
                         <IonItem>
-                            <h1>Total: {humanWeight(quantity)}</h1>
+                            <h1>
+                                Total: {humanWeight(quantity)}
+                                &nbsp;<small>(desde sempre)</small>
+                            </h1>
                         </IonItem>
                     </IonList>
                     <ProductRecordAddForm product={product} onSave={addRecord} />
