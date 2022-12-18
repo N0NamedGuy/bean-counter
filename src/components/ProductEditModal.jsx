@@ -1,7 +1,11 @@
-import { IonButton, IonButtons, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonList, IonNote, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonContent, IonFooter, IonHeader, IonInput, IonItem, IonLabel, IonList, IonNote, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { useFormik } from 'formik';
+import { useState } from 'react';
+import { ProductRemoveActionSheet } from './ProductRemoveActionSheet';
 
 export const ProductEditModal = ({ product, onDismiss }) => {
+    const [deleteSheetOpen, setDeleteSheetOpen] = useState(false);
+
     const formik = useFormik({
         initialValues: {
             productName: product?.name
@@ -28,10 +32,6 @@ export const ProductEditModal = ({ product, onDismiss }) => {
         onDismiss(newProduct, 'save');
     }
 
-    function handleRemove() {
-        onDismiss(product, 'remove');
-    }
-
     return <IonPage>
         <IonHeader>
             <IonToolbar>
@@ -45,8 +45,8 @@ export const ProductEditModal = ({ product, onDismiss }) => {
         </IonHeader>
         <IonContent>
             <form onSubmit={formik.handleSubmit}>
-                <IonList>
-                    <IonItem fill="solid"
+                <IonList inset>
+                    <IonItem
                         className={`${formik.errors.productName &&
                             formik.touched.productName ? 'ion-invalid' : 'ion-valid'}`}>
                         <IonInput
@@ -72,13 +72,27 @@ export const ProductEditModal = ({ product, onDismiss }) => {
                             Alterar
                         </IonButton>
                     </IonItem>
-                    <IonItem>
-                        <IonLabel button onClick={() => handleRemove()} color="danger">
-                            Apagar produto
-                        </IonLabel>
-                    </IonItem>
                 </IonList>
             </form>
         </IonContent>
+        <IonFooter>
+            <IonList inset>
+                <IonItem>
+                    <IonLabel button onClick={() => setDeleteSheetOpen(true)} color="danger">
+                        Apagar produto
+                    </IonLabel>
+                    <ProductRemoveActionSheet isOpen={deleteSheetOpen}
+                        product={product}
+                        onDismiss={(isOpen, action) => {
+                            setDeleteSheetOpen(isOpen);
+
+                            if (action) {
+                                onDismiss(product, action);
+                            }
+
+                        }} />
+                </IonItem>
+            </IonList>
+        </IonFooter>
     </IonPage>
 }
