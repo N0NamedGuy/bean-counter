@@ -1,33 +1,54 @@
 import {
     IonItem,
-    IonItemOption,
-    IonItemOptions,
-    IonItemSliding,
-    IonLabel,
+    IonItemDivider,
+    IonItemGroup, IonLabel,
     IonList
 } from '@ionic/react';
 import { humanWeight } from '../utils';
 
-const ProductsList = ({ productsWithTotals, onRemove }) => {
-    return productsWithTotals && productsWithTotals.length > 0 ?
-        <IonList>
-            {productsWithTotals.map((product) => {
-                return <IonItemSliding key={product.id}>
-                    <IonItem button routerLink={`/beans/products/${product.id}`}>
-                        <IonLabel>{product.name}</IonLabel>
-                        <IonLabel slot="end">
-                            {humanWeight(product.total, 1)}
-                        </IonLabel>
-                    </IonItem>
+const ProductListWithTotals = ({ products, year, total }) => {
+    return products && products.length > 0 ?
+        <IonItemGroup>
+            {year ?
+                <IonItemDivider>
+                    <IonLabel>
+                        {year}
+                    </IonLabel>
+                    {<IonLabel slot="end">
+                        {humanWeight(total, 1)}
+                    </IonLabel>}
+                </IonItemDivider> :
+                <IonItemDivider>
+                    <IonLabel>
+                        Sem registos
+                    </IonLabel>
+                </IonItemDivider>
+            }
+            {products.map((product) => {
+                return <IonItem button routerLink={`/beans/products/${product.id}`}
+                    key={`${year ?? 'empty'}-${product.id}`}>
+                    <IonLabel>{product.name}</IonLabel>
+                    <IonLabel slot="end">
+                        {humanWeight(product.total, 1)}
+                    </IonLabel>
+                </IonItem>
+            })}
+        </IonItemGroup>
+        :
+        <div className="ion-padding">
+            <h2>Ainda não adicionou nenhum produto</h2>
+        </div>
+}
 
-                    <IonItemOptions slide="end"
-                        onIonSwipe={e => onRemove(product)}>
-                        <IonItemOption color="danger" expandable
-                            onClick={e => onRemove(product)}>
-                            Apagar
-                        </IonItemOption>
-                    </IonItemOptions>
-                </IonItemSliding>
+const ProductsList = ({ productsByYear, onRemove }) => {
+    return productsByYear ?
+        <IonList>
+            {productsByYear.map(({ year, total, products }) => {
+                return <ProductListWithTotals products={products}
+                    key={year ?? 'empty'}
+                    total={total}
+                    year={year}
+                    onRemove={onRemove} />
             })}
         </IonList>
         :

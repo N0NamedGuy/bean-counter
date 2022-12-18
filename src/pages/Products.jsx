@@ -9,17 +9,17 @@ import {
     IonToolbar, useIonViewWillEnter
 } from '@ionic/react';
 import { ProductAddForm } from '../components/ProductAddForm';
-import { listProductsWithTotals, createProduct, removeProduct } from '../model/product';
+import { createProduct, listProductsByRecordYearWithTotals } from '../model/product';
 
 const Products = () => {
-    const [products, setProducts] = useState(null);
+    const [productsByYear, setProductsByYear] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useIonViewWillEnter(() => {
         setIsLoading(true);
-        listProductsWithTotals()
-            .then((products) => {
-                setProducts(products);
+        listProductsByRecordYearWithTotals()
+            .then((data) => {
+                setProductsByYear(data);
             })
             .finally(() => {
                 setIsLoading(false);
@@ -28,14 +28,8 @@ const Products = () => {
 
     async function handleAddProduct(newProduct) {
         await createProduct(newProduct);
-        const productWithTotals = await listProductsWithTotals();
-        setProducts(productWithTotals);
-    }
-
-    async function handleRemoveProduct(product) {
-        await removeProduct(product.id);
-        const productWithTotals = await listProductsWithTotals();
-        setProducts(productWithTotals);
+        const data = await listProductsByRecordYearWithTotals();
+        setProductsByYear(data);
     }
 
     return <IonPage>
@@ -47,8 +41,8 @@ const Products = () => {
         <IonContent>
             {
                 isLoading ? <div>A carregar dados</div> : <>
-                    <ProductAddForm products={products} onSave={handleAddProduct} />
-                    <ProductsList productsWithTotals={products} onRemove={handleRemoveProduct} />
+                    <ProductAddForm onSave={handleAddProduct} />
+                    <ProductsList productsByYear={productsByYear} />
                 </>
             }
         </IonContent>
