@@ -50,7 +50,7 @@ function getRandProduct() {
     return randProducts[r];
 }
 
-export const ProductAddForm = ({ products, onSave }) => {
+export const ProductAddForm = ({ onSave }) => {
     const formik = useFormik({
         initialValues: {
             productName: null
@@ -72,11 +72,8 @@ export const ProductAddForm = ({ products, onSave }) => {
     }, []);
 
     function onSubmit(values, { setSubmitting, resetForm }) {
-        const newId = getNewId(products, e => e.id);
-
         const newProduct = {
             name: values.productName,
-            id: newId,
             quantity: 0,
             records: []
         }
