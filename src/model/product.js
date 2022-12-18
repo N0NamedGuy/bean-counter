@@ -129,6 +129,93 @@ export async function listProductsWithTotals() {
     return newTotals;
 }
 
+export async function listProductsByRecordFnWithTotals(keyFn, keyName) {
+    const products = await listProducts();
+
+    const recordsWithProduct = products.reduce((prev, product) => {
+        return [
+            ...prev,
+            ...product.records.map((r) => {
+                return {
+                    product: product,
+                    ...r
+                }
+            })
+        ]
+    }, [])
+
+    const recordsByKey = recordsWithProduct.reduce((byKey, record) => {
+        const recordKey = keyFn(record);
+
+        let recordsInKey = byKey[recordKey];
+
+        if (!recordsInKey) {
+            recordsInKey = [];
+            byKey[recordKey] = recordsInKey;
+        }
+
+        recordsInKey.push(record);
+
+        return byKey;
+    }, {});
+
+    const productsByKey = Object.entries(recordsByKey)
+        .reduce((prev, [recordKey, records]) => {
+
+            const uniqProducts = records.map((record) => {
+                return record.product;
+            }).filter((product, index, arr) => {
+                return arr.indexOf(product) === index;
+            }).map((product) => {
+                const filteredRecords = product.records.filter((r) => {
+                    return keyFn(r) === recordKey;
+                });
+                return {
+                    ...product,
+                    total: filteredRecords.reduce((total, r) => total + r.quantity, 0),
+                    filteredRecords
+                }
+            });
+
+            return [
+                ...prev,
+                {
+                    [keyName]: recordKey,
+                    total: uniqProducts.reduce((total, p) => total + p.total, 0),
+                    products: uniqProducts
+                }
+            ]
+        }, []);
+
+    const productsWithNoRecords = {
+        total: 0,
+        [keyName]: null,
+        products: products.filter((p) => {
+            return p.records?.length === 0;
+        }).map((p) => {
+            return {
+                ...p,
+                total: 0
+            }
+        })
+    };
+
+    return [
+        productsWithNoRecords,
+        ...productsByKey
+    ];
+}
+
+export async function listProductsByRecordYearWithTotals() {
+    return (await listProductsByRecordFnWithTotals((r) => {
+        const year = r.recordDate.split('-')[0];
+        return parseInt(year);
+    }, 'year')).sort((a, b) => {
+        return (b.year ?? Number.MAX_SAFE_INTEGER) -
+            (a.year ?? Number.MAX_SAFE_INTEGER);
+    })
+}
+
 async function loadProductDb() {
     if (!productsDbCache) {
         try {
