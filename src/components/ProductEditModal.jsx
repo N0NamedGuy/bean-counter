@@ -77,8 +77,8 @@ export const ProductEditModal = ({ product, onDismiss }) => {
         </IonContent>
         <IonFooter>
             <IonList inset>
-                <IonItem>
-                    <IonLabel button onClick={() => setDeleteSheetOpen(true)} color="danger">
+                <IonItem button>
+                    <IonLabel onClick={() => setDeleteSheetOpen(true)} color="danger">
                         Apagar produto
                     </IonLabel>
                     <ProductRemoveActionSheet isOpen={deleteSheetOpen}
