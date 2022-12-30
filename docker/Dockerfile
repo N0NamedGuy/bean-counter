@@ -4,12 +4,12 @@ WORKDIR /app
 
 ENV PATH /app/node_module/.bin:$PATH
 
-COPY package.json ./
+COPY ./packages/client/package.json ./
 COPY yarn.lock ./
 COPY .yarnrc.yml ./
 COPY .yarn/ ./.yarn
-COPY public/ ./public
-COPY src/ ./src
+COPY ./packages/client/public/ ./public
+COPY ./packages/client/src/ ./src
 RUN yarn install --immutable
 RUN yarn build
 
